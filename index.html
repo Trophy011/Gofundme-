@@ -3,9 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Support orphans worldwide with your donation to provide food, shelter, and education. Every contribution matters." />
   <title>Support Orphans Worldwide</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="icon" href="https://gofundme.com/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for social sharing icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" />
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    .btn-primary {
+      transition: background-color 0.3s ease, transform 0.1s ease;
+++
+
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+    }
+    .card {
+      transition: transform 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+    }
+    .progress-bar {
+      height: 8px;
+      background-color: #e5e7eb;
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background-color: #00b964;
+      transition: width 0.5s ease-in-out;
+    }
+    .social-btn {
+      transition: background-color 0.3s ease;
+    }
+    .social-btn:hover {
+      opacity: 0.9;
+    }
+  </style>
   <script>
     function toggleWallets() {
       const wallets = document.getElementById('wallets');
@@ -23,60 +63,132 @@
       const link = 'https://nowpayments.io/payment/?iid=5918128098&amount=' + encodeURIComponent(amount);
       window.open(link, '_blank');
     }
+
+    // Progress Bar Update
+    function updateProgressBar() {
+      const goal = 10000; // Placeholder: Donation goal in USD
+      const raised = 2500; // Placeholder: Amount raised in USD
+      const percentage = Math.min((raised / goal) * 100, 100);
+      document.getElementById('progress-bar-fill').style.width = percentage + '%';
+      document.getElementById('raised-amount').textContent = '$' + raised.toLocaleString();
+      document.getElementById('goal-amount').textContent = '$' + goal.toLocaleString();
+    }
+
+    // Social Sharing
+    function shareOnTwitter() {
+      const url = encodeURIComponent(window.location.href);
+      const text = encodeURIComponent('Support orphans worldwide! Donate to provide food, shelter, and education:');
+      window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+    }
+
+    function shareOnFacebook() {
+      const url = encodeURIComponent(window.location.href);
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    }
+
+    function shareOnWhatsApp() {
+      const url = encodeURIComponent(window.location.href);
+      const text = encodeURIComponent('Support orphans worldwide! Donate to provide food, shelter, and education:');
+      window.open(`https://api.whatsapp.com/send?text=${text}%20${url}`, '_blank');
+    }
+
+    // Run progress bar update on page load
+    window.onload = updateProgressBar;
   </script>
 </head>
-<body class="bg-gray-50 text-gray-800">
-  <header class="bg-white shadow p-4 sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto flex items-center justify-between">
-      <h1 class="text-2xl font-bold text-green-600">Support Orphans Worldwide</h1>
-      <a href="#donate-options" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Donate</a>
+<body class="bg-gray-50 text-gray-900 antialiased">
+  <!-- Header -->
+  <header class="bg-white shadow-sm py-4 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      <!-- Logo Placeholder -->
+      <a href="/" class="flex items-center">
+        <span class="text-2xl font-bold text-green-600">Support Orphans Worldwide</span>
+      </a>
+      <nav class="flex items-center space-x-4">
+        <a href="#donate-options" class="bg-green-500 text-white px-5 py-2.5 rounded-full font-semibold text-sm hover:bg-green-600 btn-primary">Donate Now</a>
+      </nav>
     </div>
   </header>
 
-  <section class="bg-green-100 py-16 text-center">
-    <h2 class="text-4xl font-extrabold text-green-800">Bring Hope to Orphans</h2>
-    <p class="text-lg mt-4 max-w-2xl mx-auto">Your donation provides food, shelter, and education to children in need. Help make a difference with your support — every contribution matters.</p>
-    <a href="#donate-options" class="mt-6 inline-block bg-green-600 text-white px-6 py-3 rounded text-lg hover:bg-green-700">Donate Now</a>
+  <!-- Hero Section -->
+  <section class="bg-gray-100 py-20 text-center">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight">Bring Hope to Orphans</h2>
+      <p class="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">Your donation provides food, shelter, and education to children in need. Help make a difference with your support — every contribution matters.</p>
+      <!-- Progress Bar and Goal Tracker -->
+      <div class="mt-6">
+        <div class="flex justify-between text-sm font-medium text-gray-700 mb-2">
+          <span>Raised: <span id="raised-amount">$0</span></span>
+          <span>Goal: <span id="goal-amount">$0</span></span>
+        </div>
+        <div class="progress-bar">
+          <div id="progress-bar-fill" class="progress-bar-fill"></div>
+        </div>
+      </div>
+      <!-- Social Sharing Buttons -->
+      <div class="mt-6 flex justify-center space-x-4">
+        <button onclick="shareOnTwitter()" class="social-btn bg-blue-400 text-white p-2 rounded-full" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </button>
+        <button onclick="shareOnFacebook()" class="social-btn bg-blue-600 text-white p-2 rounded-full" title="Share on Facebook">
+          <i class="fab fa-facebook-f"></i>
+        </button>
+        <button onclick="shareOnWhatsApp()" class="social-btn bg-green-400 text-white p-2 rounded-full" title="Share on WhatsApp">
+          <i class="fab fa-whatsapp"></i>
+        </button>
+      </div>
+      <a href="#donate-options" class="mt-6 inline-block bg-green-500 text-white px-8 py-3 rounded-full font-semibold text-base hover:bg-green-600 btn-primary">Donate Now</a>
+    </div>
   </section>
 
-  <section id="donate-options" class="max-w-4xl mx-auto px-4 py-12">
-    <h3 class="text-2xl font-bold mb-6">Choose How You Want to Donate</h3>
+  <!-- Donation Options -->
+  <section id="donate-options" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <h3 class="text-3xl font-bold text-gray-900 mb-8 text-center">Choose How You Want to Donate</h3>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="bg-white shadow p-6 rounded-lg text-center">
-        <h4 class="text-lg font-semibold mb-2">Pay with Card</h4>
-        <p class="text-sm mb-4">Use your credit/debit card to donate. Your payment will be automatically converted and sent to our BTC wallet.</p>
-        <label for="amount" class="block mb-2 font-medium text-sm">Enter Donation Amount (USD)</label>
-        <input type="number" id="amount" class="w-full px-4 py-2 border border-gray-300 rounded mb-4" placeholder="e.g., 25" min="1" />
-        <button onclick="redirectToNowPayments()" class="w-full bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Donate with Card</button>
+      <!-- Card: Pay with Card -->
+      <div class="bg-white shadow-md rounded-lg p-6 text-center card">
+        <h4 class="text-xl font-semibold text-gray-900 mb-3">Pay with Card</h4>
+        <p class="text-sm text-gray-600 mb-4">Use your credit/debit card to donate. Your payment will be automatically converted and sent to our BTC wallet.</p>
+        <label for="amount" class="block mb-2 font-medium text-sm text-gray-700">Enter Donation Amount (USD)</label>
+        <input type="number" id="amount" class="w-full px-4 py-2 border border-gray-300 rounded-md mb-4 focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="e.g., 25" min="1" />
+        <button onclick="redirectToNowPayments()" class="w-full bg-green-500 text-white px-4 py-2.5 rounded-full font-semibold text-sm hover:bg-green-600 btn-primary">Donate with Card</button>
       </div>
 
-      <div class="bg-white shadow p-6 rounded-lg text-center">
-        <h4 class="text-lg font-semibold mb-2">Donate with Crypto</h4>
-        <p class="text-sm mb-4">Donate directly to our official wallets in BTC, ETH, or USDT.</p>
-        <button id="walletToggleBtn" onclick="toggleWallets()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Show Wallets</button>
-        <div id="wallets" class="hidden text-left mt-4 text-sm">
-          <p><strong>Bitcoin (BTC):</strong> bc1qs4um36nsaswykufg9j9vn4g5xuyqull843ydzm</p>
-          <p><strong>Ethereum (ETH):</strong> 0xee166892f3406690010AEB9F6386282a4da2F9ad</p>
-          <p><strong>USDT (ERC20):</strong> 0xee166892f3406690010AEB9F6386282a4da2F9ad</p>
+      <!-- Card: Donate with Crypto -->
+      <div class="bg-white shadow-md rounded-lg p-6 text-center card">
+        <h4 class="text-xl font-semibold text-gray-900 mb-3">Donate with Crypto</h4>
+        <p class="text-sm text-gray-600 mb-4">Donate directly to our official wallets in BTC, ETH, or USDT.</p>
+        <button id="walletToggleBtn" onclick="toggleWallets()" class="bg-green-500 text-white px-4 py-2.5 rounded-full font-semibold text-sm hover:bg-green-600 btn-primary">Show Wallets</button>
+        <div id="wallets" class="hidden text-left mt-4 text-sm text-gray-600">
+          <p class="mb-2"><strong class="text-gray-900">Bitcoin (BTC):</strong> bc1qs4um36nsaswykufg9j9vn4g5xuyqull843ydzm</p>
+          <p class="mb-2"><strong class="text-gray-900">Ethereum (ETH):</strong> 0xee166892f3406690010AEB9F6386282a4da2F9ad</p>
+          <p><strong class="text-gray-900">USDT (ERC20):</strong> 0xee166892f3406690010AEB9F6386282a4da2F9ad</p>
         </div>
       </div>
 
-      <div class="bg-white shadow p-6 rounded-lg text-center">
-        <h4 class="text-lg font-semibold mb-2">PayPal / Apple Pay / Cash App</h4>
-        <p class="text-sm mb-4">To donate using PayPal, Apple Pay, or Cash App, please email us for payment instructions.</p>
-        <p class="font-medium text-green-700">plshelptheorphans@gmail.com</p>
+      <!-- Card: PayPal / Apple Pay / Cash App -->
+      <div class="bg-white shadow-md rounded-lg p-6 text-center card">
+        <h4 class="text-xl font-semibold text-gray-900 mb-3">PayPal / Apple Pay / Cash App</h4>
+        <p class="text-sm text-gray-600 mb-4">To donate using PayPal, Apple Pay, or Cash App, please email us for payment instructions.</p>
+        <p class="font-medium text-green-600">plshelptheorphans@gmail.com</p>
       </div>
     </div>
   </section>
 
-  <section class="bg-gray-100 py-8 text-center">
-    <h4 class="text-xl font-bold mb-2">Contact Us</h4>
-    <p>For questions or donation confirmations, email us at:</p>
-    <p class="font-medium text-green-700">plshelptheorphans@gmail.com</p>
+  <!-- Contact Section -->
+  <section class="bg-gray-100 py-12 text-center">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h4 class="text-2xl font-bold text-gray-900 mb-3">Contact Us</h4>
+      <p class="text-gray-600 mb-2">For questions or donation confirmations, email us at:</p>
+      <p class="font-medium text-green-600">plshelptheorphans@gmail.com</p>
+    </div>
   </section>
 
-  <footer class="bg-white text-center py-4 text-sm text-gray-500">
-    &copy; 2025 Support Orphans Worldwide. All rights reserved.
+  <!-- Footer -->
+  <footer class="bg-white py-6 text-center text-sm text-gray-500 border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p>© 2025 Support Orphans Worldwide. All rights reserved.</p>
+    </div>
   </footer>
 </body>
 </html>
