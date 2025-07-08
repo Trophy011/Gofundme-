@@ -13,6 +13,16 @@
       wallets.classList.toggle('hidden');
       button.textContent = wallets.classList.contains('hidden') ? 'Show Wallets' : 'Hide Wallets';
     }
+
+    function redirectToNowPayments() {
+      const amount = document.getElementById('amount').value;
+      if (!amount || isNaN(amount) || amount <= 0) {
+        alert('Please enter a valid donation amount.');
+        return;
+      }
+      const link = 'https://nowpayments.io/payment/?iid=5918128098&amount=' + encodeURIComponent(amount);
+      window.open(link, '_blank');
+    }
   </script>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -35,7 +45,9 @@
       <div class="bg-white shadow p-6 rounded-lg text-center">
         <h4 class="text-lg font-semibold mb-2">Pay with Card</h4>
         <p class="text-sm mb-4">Use your credit/debit card to donate. Your payment will be automatically converted and sent to our BTC wallet.</p>
-        <a href="https://nowpayments.io/payment/?iid=5918128098" target="_blank" title="Donate using card via NowPayments" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Donate by Card</a>
+        <label for="amount" class="block mb-2 font-medium text-sm">Enter Donation Amount (USD)</label>
+        <input type="number" id="amount" class="w-full px-4 py-2 border border-gray-300 rounded mb-4" placeholder="e.g., 25" min="1" />
+        <button onclick="redirectToNowPayments()" class="w-full bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Donate with Card</button>
       </div>
 
       <div class="bg-white shadow p-6 rounded-lg text-center">
